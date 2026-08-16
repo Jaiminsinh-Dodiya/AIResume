@@ -1,0 +1,60 @@
+## Visual Studio / .NET professional .gitignore
+## Ignores build output, user-specific files, NuGet caches, and temp/IDE clutter
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ll]og/
+
+# Visual Studio user-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+# NuGet
+*.nupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+nuget.exe
+*.exe
+
+# setup.bat downloads nuget.exe here on first run — local tool, not source
+tools/
+
+# ASP.NET specific
+*.pubxml
+*.pubxml.user
+*.publishproj
+PublishScripts/
+**/App_Data/*.mdf
+**/App_Data/*.ldf
+
+# Resharper / other IDE caches
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Web.config secrets (uncomment if you split out a local override)
+# Web.Debug.config
+# Web.Release.config
+# connectionStrings.config
