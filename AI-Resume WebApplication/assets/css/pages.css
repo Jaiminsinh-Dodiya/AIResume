@@ -1,0 +1,217 @@
+/* ==========================================
+   ResumeAI Page-Specific Custom CSS Styles
+   Theme: Plum (#3A0F34) | Gold (#EAAA00) | Mist (#DDE3E8)
+   ========================================== */
+
+/* 1. Landing Page Styles */
+.hero-section {
+  padding-top: 160px;
+  padding-bottom: var(--space-20);
+  text-align: center;
+  position: relative;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: var(--space-6);
+  letter-spacing: -0.03em;
+}
+
+.hero-subtitle {
+  font-size: var(--text-lg);
+  max-width: 680px;
+  margin: 0 auto var(--space-8) auto;
+  color: var(--text-secondary);
+}
+
+.hero-mockup-frame {
+  margin-top: var(--space-12);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3);
+  background: rgba(58, 15, 52, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 30px 80px rgba(18, 4, 17, 0.8), 0 0 35px rgba(234, 170, 0, 0.25);
+}
+
+.hero-mockup-inner {
+  background: rgba(26, 7, 24, 0.95);
+  border-radius: var(--radius-lg);
+  min-height: 480px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+/* 2. Resume Builder 2-Column Split Layout */
+.builder-container {
+  display: grid;
+  grid-template-columns: 56% 44%;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .builder-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.builder-form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.builder-preview-panel {
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding-right: var(--space-2);
+}
+
+/* 3. Document Preview / A4 Paper Workspace */
+.a4-workspace {
+  background: rgba(18, 4, 17, 0.95);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 800px;
+  overflow: auto;
+}
+
+.a4-document {
+  width: 210mm;
+  min-height: 297mm;
+  background: #FFFFFF;
+  color: #1E293B;
+  padding: 20mm;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  transform-origin: top center;
+  transition: transform 0.2s ease;
+  font-family: var(--font-body);
+}
+
+.a4-document h1 {
+  color: #0F172A;
+  font-size: 24pt;
+  margin-bottom: 4pt;
+}
+
+.a4-document h2 {
+  color: #8E2368;
+  font-size: 14pt;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5pt solid #E2E8F0;
+  padding-bottom: 4pt;
+  margin-top: 14pt;
+  margin-bottom: 8pt;
+}
+
+.a4-document p, .a4-document li {
+  font-size: 10pt;
+  line-height: 1.5;
+  color: #334155;
+}
+
+/* Document Viewer Floating Toolbar */
+.viewer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(26, 7, 24, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+
+/* 4. Templates Grid Cards */
+.template-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: var(--transition-base);
+  position: relative;
+}
+
+.template-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary);
+  box-shadow: 0 10px 30px rgba(234, 170, 0, 0.3), 0 0 20px rgba(58, 15, 52, 0.5);
+}
+
+.template-thumb {
+  height: 320px;
+  background: rgba(30, 8, 28, 0.8);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.template-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 5, 19, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+.template-card:hover .template-overlay {
+  opacity: 1;
+}
+
+/* 5. Resume Analyzer Gauge & Score Cards */
+.analyzer-gauge {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-full);
+  background: conic-gradient(var(--accent-primary) 0% 88%, rgba(58, 15, 52, 0.6) 88% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+}
+
+.analyzer-gauge-inner {
+  width: 115px;
+  height: 115px;
+  border-radius: var(--radius-full);
+  background: rgba(20, 5, 19, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 6. Settings Page Left Navigation Tabs */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
