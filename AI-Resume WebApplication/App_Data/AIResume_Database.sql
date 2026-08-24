@@ -33,3 +33,15 @@ IF OBJECT_ID('CareerProfile', 'U') IS NOT NULL DROP TABLE CareerProfile;
 IF OBJECT_ID('Users', 'U') IS NOT NULL DROP TABLE Users;
 GO
 
+
+-- --------------------------------------------------------------------
+-- TABLE 1 : Users
+-- Stores login information. Role decides User Panel or Admin Panel.
+-- --------------------------------------------------------------------
+CREATE TABLE Users
+(
+    Id          INT IDENTITY(1,1) NOT NULL,
+    FullName    NVARCHAR(100)     NOT NULL,
+    Email       NVARCHAR(100)     NOT NULL
+);
+GO
