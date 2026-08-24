@@ -42,6 +42,10 @@ CREATE TABLE Users
 (
     Id          INT IDENTITY(1,1) NOT NULL,
     FullName    NVARCHAR(100)     NOT NULL,
-    Email       NVARCHAR(100)     NOT NULL
+    Email       NVARCHAR(100)     NOT NULL,
+    Password    NVARCHAR(100)     NOT NULL,
+
+    CONSTRAINT PK_Users PRIMARY KEY (Id),
+    CONSTRAINT UQ_Users_Email UNIQUE (Email)
 );
 GO
