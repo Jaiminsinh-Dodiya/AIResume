@@ -57,3 +57,16 @@ CREATE TABLE Users
 );
 GO
 
+
+-- --------------------------------------------------------------------
+-- TABLE 2 : CareerProfile   (1 : 1 with Users)
+-- UNIQUE on UserId means one user can have only ONE career profile.
+-- --------------------------------------------------------------------
+CREATE TABLE CareerProfile
+(
+    CareerProfileId      INT IDENTITY(1,1) NOT NULL,
+    UserId               INT               NOT NULL,
+    ProfessionalTitle    NVARCHAR(100)     NULL,
+    ProfessionalSummary  NVARCHAR(MAX)     NULL
+);
+GO
