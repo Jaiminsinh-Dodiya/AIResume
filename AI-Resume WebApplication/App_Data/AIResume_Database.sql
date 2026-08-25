@@ -34,6 +34,10 @@ IF OBJECT_ID('Users', 'U') IS NOT NULL DROP TABLE Users;
 GO
 
 
+-- ====================================================================
+-- STEP 2 : Create tables (parent table first, then child tables)
+-- ====================================================================
+
 -- --------------------------------------------------------------------
 -- TABLE 1 : Users
 -- Stores login information. Role decides User Panel or Admin Panel.
@@ -44,8 +48,12 @@ CREATE TABLE Users
     FullName    NVARCHAR(100)     NOT NULL,
     Email       NVARCHAR(100)     NOT NULL,
     Password    NVARCHAR(100)     NOT NULL,
+    Role        NVARCHAR(20)      NOT NULL DEFAULT 'User',
+    CreatedAt   DATETIME          NOT NULL DEFAULT GETDATE(),
 
     CONSTRAINT PK_Users PRIMARY KEY (Id),
-    CONSTRAINT UQ_Users_Email UNIQUE (Email)
+    CONSTRAINT UQ_Users_Email UNIQUE (Email),
+    CONSTRAINT CK_Users_Role CHECK (Role IN ('User', 'Admin'))
 );
 GO
+
