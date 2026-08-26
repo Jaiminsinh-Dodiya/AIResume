@@ -57,7 +57,6 @@ CREATE TABLE Users
 );
 GO
 
-
 -- --------------------------------------------------------------------
 -- TABLE 2 : CareerProfile   (1 : 1 with Users)
 -- UNIQUE on UserId means one user can have only ONE career profile.
@@ -68,6 +67,10 @@ CREATE TABLE CareerProfile
     UserId               INT               NOT NULL,
     ProfessionalTitle    NVARCHAR(100)     NULL,
     ProfessionalSummary  NVARCHAR(MAX)     NULL,
+    Phone                NVARCHAR(20)      NULL,
+    Location             NVARCHAR(100)     NULL,
+    LinkedInUrl          NVARCHAR(255)     NULL,
+    PortfolioUrl         NVARCHAR(255)     NULL,
 
     CONSTRAINT PK_CareerProfile PRIMARY KEY (CareerProfileId),
     CONSTRAINT UQ_CareerProfile_UserId UNIQUE (UserId),
@@ -75,3 +78,4 @@ CREATE TABLE CareerProfile
         REFERENCES Users(Id) ON DELETE CASCADE
 );
 GO
+
