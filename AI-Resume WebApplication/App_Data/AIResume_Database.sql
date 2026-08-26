@@ -67,6 +67,11 @@ CREATE TABLE CareerProfile
     CareerProfileId      INT IDENTITY(1,1) NOT NULL,
     UserId               INT               NOT NULL,
     ProfessionalTitle    NVARCHAR(100)     NULL,
-    ProfessionalSummary  NVARCHAR(MAX)     NULL
+    ProfessionalSummary  NVARCHAR(MAX)     NULL,
+
+    CONSTRAINT PK_CareerProfile PRIMARY KEY (CareerProfileId),
+    CONSTRAINT UQ_CareerProfile_UserId UNIQUE (UserId),
+    CONSTRAINT FK_CareerProfile_Users FOREIGN KEY (UserId)
+        REFERENCES Users(Id) ON DELETE CASCADE
 );
 GO
