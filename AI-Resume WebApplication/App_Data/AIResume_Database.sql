@@ -79,7 +79,6 @@ CREATE TABLE CareerProfile
 );
 GO
 
-
 -- --------------------------------------------------------------------
 -- TABLE 3 : Skills   (1 : N with Users)
 -- --------------------------------------------------------------------
@@ -89,6 +88,11 @@ CREATE TABLE Skills
     UserId         INT               NOT NULL,
     SkillName      NVARCHAR(100)     NOT NULL,
     SkillCategory  NVARCHAR(50)      NULL,
-    SkillLevel     NVARCHAR(30)      NULL
+    SkillLevel     NVARCHAR(30)      NULL,
+
+    CONSTRAINT PK_Skills PRIMARY KEY (SkillId),
+    CONSTRAINT FK_Skills_Users FOREIGN KEY (UserId)
+        REFERENCES Users(Id) ON DELETE CASCADE
 );
 GO
+
