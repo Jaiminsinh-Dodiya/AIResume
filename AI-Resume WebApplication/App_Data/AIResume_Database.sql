@@ -79,3 +79,16 @@ CREATE TABLE CareerProfile
 );
 GO
 
+
+-- --------------------------------------------------------------------
+-- TABLE 3 : Skills   (1 : N with Users)
+-- --------------------------------------------------------------------
+CREATE TABLE Skills
+(
+    SkillId        INT IDENTITY(1,1) NOT NULL,
+    UserId         INT               NOT NULL,
+    SkillName      NVARCHAR(100)     NOT NULL,
+    SkillCategory  NVARCHAR(50)      NULL,
+    SkillLevel     NVARCHAR(30)      NULL
+);
+GO
