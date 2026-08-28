@@ -96,3 +96,24 @@ CREATE TABLE Skills
 );
 GO
 
+-- --------------------------------------------------------------------
+-- TABLE 4 : Education   (1 : N with Users)
+-- EndDate is NULL when the course is still running.
+-- --------------------------------------------------------------------
+CREATE TABLE Education
+(
+    EducationId    INT IDENTITY(1,1) NOT NULL,
+    UserId         INT               NOT NULL,
+    Institution    NVARCHAR(150)     NOT NULL,
+    Degree         NVARCHAR(100)     NOT NULL,
+    FieldOfStudy   NVARCHAR(100)     NULL,
+    StartDate      DATE              NULL,
+    EndDate        DATE              NULL,
+    Grade          NVARCHAR(50)      NULL,
+
+    CONSTRAINT PK_Education PRIMARY KEY (EducationId),
+    CONSTRAINT FK_Education_Users FOREIGN KEY (UserId)
+        REFERENCES Users(Id) ON DELETE CASCADE
+);
+GO
+
