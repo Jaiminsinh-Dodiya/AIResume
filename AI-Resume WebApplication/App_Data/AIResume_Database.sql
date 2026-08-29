@@ -117,3 +117,25 @@ CREATE TABLE Education
 );
 GO
 
+-- --------------------------------------------------------------------
+-- TABLE 5 : Experience   (1 : N with Users)
+-- IsCurrent = 1 means the user still works there (EndDate stays NULL).
+-- --------------------------------------------------------------------
+CREATE TABLE Experience
+(
+    ExperienceId  INT IDENTITY(1,1) NOT NULL,
+    UserId        INT               NOT NULL,
+    CompanyName   NVARCHAR(150)     NOT NULL,
+    JobTitle      NVARCHAR(100)     NOT NULL,
+    StartDate     DATE              NULL,
+    EndDate       DATE              NULL,
+    IsCurrent     BIT               NOT NULL DEFAULT 0,
+    Description   NVARCHAR(MAX)     NULL,
+
+    CONSTRAINT PK_Experience PRIMARY KEY (ExperienceId),
+    CONSTRAINT FK_Experience_Users FOREIGN KEY (UserId)
+        REFERENCES Users(Id) ON DELETE CASCADE
+);
+GO
+
+
