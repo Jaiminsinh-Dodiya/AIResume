@@ -139,3 +139,17 @@ CREATE TABLE Experience
 GO
 
 
+-- ====================================================================
+-- STEP 3 : Sample data for testing / evaluation
+-- Admin login : admin@resumeai.com / admin123
+-- User login  : demo@resumeai.com  / demo123
+-- ====================================================================
+
+-- One Admin and one normal User
+INSERT INTO Users (FullName, Email, Password, Role)
+VALUES ('Admin', 'admin@resumeai.com', 'admin123', 'Admin');
+
+INSERT INTO Users (FullName, Email, Password, Role)
+VALUES ('Demo User', 'demo@resumeai.com', 'demo123', 'User');
+GO
+
