@@ -153,3 +153,41 @@ INSERT INTO Users (FullName, Email, Password, Role)
 VALUES ('Demo User', 'demo@resumeai.com', 'demo123', 'User');
 GO
 
+-- Career profile for Demo User (only one row allowed per user)
+INSERT INTO CareerProfile (UserId, ProfessionalTitle, ProfessionalSummary, Phone, Location, LinkedInUrl, PortfolioUrl)
+VALUES (
+    (SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'),
+    'Junior Software Developer',
+    'BCA student interested in web development using ASP.NET and SQL Server.',
+    '9876543210',
+    'Rajkot, Gujarat',
+    'https://linkedin.com/in/demouser',
+    'https://demouser.dev'
+);
+GO
+
+-- Skills for Demo User
+INSERT INTO Skills (UserId, SkillName, SkillCategory, SkillLevel)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'C#', 'Programming', 'Intermediate');
+
+INSERT INTO Skills (UserId, SkillName, SkillCategory, SkillLevel)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'SQL Server', 'Database', 'Intermediate');
+
+INSERT INTO Skills (UserId, SkillName, SkillCategory, SkillLevel)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'JavaScript', 'Programming', 'Beginner');
+GO
+
+-- Education for Demo User
+INSERT INTO Education (UserId, Institution, Degree, FieldOfStudy, StartDate, EndDate, Grade)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'RK University', 'BCA', 'Computer Applications', '2023-07-01', NULL, '8.2 CGPA');
+
+INSERT INTO Education (UserId, Institution, Degree, FieldOfStudy, StartDate, EndDate, Grade)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'City Higher Secondary School', '12th', 'Science', '2021-06-01', '2023-03-31', '78%');
+GO
+
+-- Experience for Demo User
+INSERT INTO Experience (UserId, CompanyName, JobTitle, StartDate, EndDate, IsCurrent, Description)
+VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'ABC Web Solutions', 'Web Development Intern', '2025-06-01', '2025-08-31', 0, 'Worked on ASP.NET Web Forms pages and SQL Server tables.');
+GO
+
+
