@@ -191,3 +191,13 @@ VALUES ((SELECT Id FROM Users WHERE Email = 'demo@resumeai.com'), 'ABC Web Solut
 GO
 
 
+-- ====================================================================
+-- STEP 4 : Check that everything was created (optional)
+-- ====================================================================
+
+SELECT * FROM Users;
+SELECT * FROM CareerProfile;
+SELECT * FROM Skills;
+SELECT * FROM Education;
+SELECT * FROM Experience;
+GO
