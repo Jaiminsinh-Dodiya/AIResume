@@ -74,5 +74,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// Pre-insertion duplicate email validation query

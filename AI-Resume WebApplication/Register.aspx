@@ -134,5 +134,3 @@
         </div>
     </div>
 </asp:Content>
-
-<!-- FullName, Email, Password inputs validated -->
