@@ -60,5 +60,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// Session values stored: userId, userName, role
