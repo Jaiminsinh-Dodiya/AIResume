@@ -46,5 +46,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// Dynamic authentication state navigation header
