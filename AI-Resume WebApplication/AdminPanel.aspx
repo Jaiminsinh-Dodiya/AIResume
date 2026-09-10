@@ -77,3 +77,5 @@
     </div>
 
 </asp:Content>
+
+<!-- Add User Form section configured -->
