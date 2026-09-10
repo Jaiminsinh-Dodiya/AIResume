@@ -226,3 +226,5 @@ namespace AI_Resume_WebApplication
         }
     }
 }
+
+// btnAdd_Click inserts new user record
