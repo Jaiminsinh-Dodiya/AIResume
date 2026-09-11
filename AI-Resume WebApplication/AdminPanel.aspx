@@ -79,3 +79,5 @@
 </asp:Content>
 
 <!-- Add User Form section configured -->
+
+<!-- GridView ButtonFields cmd_edit and cmd_delete wired -->
