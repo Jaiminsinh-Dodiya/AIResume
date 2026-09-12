@@ -228,3 +228,5 @@ namespace AI_Resume_WebApplication
 }
 
 // btnAdd_Click inserts new user record
+
+// GridView1_RowCommand event dispatcher
