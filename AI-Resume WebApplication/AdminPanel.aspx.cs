@@ -232,3 +232,5 @@ namespace AI_Resume_WebApplication
 // GridView1_RowCommand event dispatcher
 
 // ViewState["Id"] assigned from DataKeys
+
+// filldata() populates form with user details
