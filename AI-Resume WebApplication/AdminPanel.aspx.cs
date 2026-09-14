@@ -238,3 +238,5 @@ namespace AI_Resume_WebApplication
 // Button text changes to Update User
 
 // SQL UPDATE branch in btnAdd_Click
+
+// Existing password preserved when empty
