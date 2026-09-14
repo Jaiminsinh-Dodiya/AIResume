@@ -236,3 +236,5 @@ namespace AI_Resume_WebApplication
 // filldata() populates form with user details
 
 // Button text changes to Update User
+
+// SQL UPDATE branch in btnAdd_Click
