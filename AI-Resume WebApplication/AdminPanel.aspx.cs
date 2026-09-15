@@ -240,3 +240,5 @@ namespace AI_Resume_WebApplication
 // SQL UPDATE branch in btnAdd_Click
 
 // Existing password preserved when empty
+
+// cmd_delete command deletes record from Users table
