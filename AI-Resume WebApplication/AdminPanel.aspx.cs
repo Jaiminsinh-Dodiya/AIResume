@@ -242,3 +242,5 @@ namespace AI_Resume_WebApplication
 // Existing password preserved when empty
 
 // cmd_delete command deletes record from Users table
+
+// Active admin account self-deletion check
