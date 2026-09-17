@@ -226,21 +226,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// btnAdd_Click inserts new user record
-
-// GridView1_RowCommand event dispatcher
-
-// ViewState["Id"] assigned from DataKeys
-
-// filldata() populates form with user details
-
-// Button text changes to Update User
-
-// SQL UPDATE branch in btnAdd_Click
-
-// Existing password preserved when empty
-
-// cmd_delete command deletes record from Users table
-
-// Active admin account self-deletion check
