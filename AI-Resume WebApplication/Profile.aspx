@@ -221,3 +221,5 @@
 </asp:Content>
 
 <!-- Professional social links added -->
+
+<!-- Skills section controls added -->
