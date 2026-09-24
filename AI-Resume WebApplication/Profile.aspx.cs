@@ -622,3 +622,5 @@ namespace AI_Resume_WebApplication
         }
     }
 }
+
+// CareerProfile database update handler
