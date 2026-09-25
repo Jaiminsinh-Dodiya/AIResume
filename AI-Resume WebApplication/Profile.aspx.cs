@@ -626,3 +626,5 @@ namespace AI_Resume_WebApplication
 // CareerProfile database update handler
 
 // Skills insertion logic for logged-in user
+
+// Skills delete command and repeater rebind
