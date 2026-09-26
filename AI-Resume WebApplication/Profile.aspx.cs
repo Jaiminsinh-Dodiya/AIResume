@@ -628,3 +628,5 @@ namespace AI_Resume_WebApplication
 // Skills insertion logic for logged-in user
 
 // Skills delete command and repeater rebind
+
+// Education data operations attached
