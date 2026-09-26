@@ -223,3 +223,5 @@
 <!-- Professional social links added -->
 
 <!-- Skills section controls added -->
+
+<!-- Education timeline controls added -->
