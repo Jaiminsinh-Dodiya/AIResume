@@ -630,3 +630,5 @@ namespace AI_Resume_WebApplication
 // Skills delete command and repeater rebind
 
 // Education data operations attached
+
+// Experience persistence and IsCurrent flag mapping
