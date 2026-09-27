@@ -225,3 +225,5 @@
 <!-- Skills section controls added -->
 
 <!-- Education timeline controls added -->
+
+<!-- Work experience controls added -->
