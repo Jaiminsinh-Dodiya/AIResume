@@ -219,11 +219,3 @@
 
 <asp:Content ID="FooterOverride" ContentPlaceHolderID="FooterContent" runat="server">
 </asp:Content>
-
-<!-- Professional social links added -->
-
-<!-- Skills section controls added -->
-
-<!-- Education timeline controls added -->
-
-<!-- Work experience controls added -->
