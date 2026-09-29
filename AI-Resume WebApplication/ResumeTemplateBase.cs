@@ -359,3 +359,5 @@ namespace AI_Resume_WebApplication
         }
     }
 }
+
+// Modern Template dual-column layout
