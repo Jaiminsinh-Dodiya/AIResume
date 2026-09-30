@@ -363,3 +363,5 @@ namespace AI_Resume_WebApplication
 // Modern Template dual-column layout
 
 // Modern Template skill badges and timeline
+
+// Executive Template serif layout
