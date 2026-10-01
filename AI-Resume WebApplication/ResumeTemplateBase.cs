@@ -365,3 +365,5 @@ namespace AI_Resume_WebApplication
 // Modern Template skill badges and timeline
 
 // Executive Template serif layout
+
+// Executive Template chronological blocks
