@@ -367,3 +367,5 @@ namespace AI_Resume_WebApplication
 // Executive Template serif layout
 
 // Executive Template chronological blocks
+
+// Minimalist Template clean layout
