@@ -360,12 +360,4 @@ namespace AI_Resume_WebApplication
     }
 }
 
-// Modern Template dual-column layout
-
-// Modern Template skill badges and timeline
-
-// Executive Template serif layout
-
-// Executive Template chronological blocks
-
-// Minimalist Template clean layout
+// [Experimental]: Mock interview question generator integration hooks
