@@ -40,3 +40,5 @@ namespace AI_Resume_WebApplication
         }
     }
 }
+
+// Dynamic suggestions calculations
