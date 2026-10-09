@@ -106,3 +106,5 @@
 
 <asp:Content ID="FooterOverride" ContentPlaceHolderID="FooterContent" runat="server">
 </asp:Content>
+
+<!-- AI Smart Rewrite trigger button -->
