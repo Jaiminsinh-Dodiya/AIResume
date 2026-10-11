@@ -359,5 +359,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// [Experimental]: Mock interview question generator integration hooks
