@@ -1,0 +1,13 @@
+AI Resume Builder - Session + ViewState + MasterPage replacement
+
+1. Backup your current project first.
+2. Copy the files in this ZIP into your existing project folder and replace the matching files.
+3. DELETE AppPageBase.cs from your project.
+4. Do NOT remove MasterPageFile="~/Website.Master" from the .aspx pages.
+5. The private pages check Session["userId"].
+6. The private pages still use the Website Master Page and call EnableAppLayout().
+7. Public pages such as Default.aspx, Login.aspx, Register.aspx, Templates.aspx and Preview.aspx do not require a login Session check.
+8. SQL string concatenation is intentionally preserved because this project follows the faculty reference style.
+9. ResumeBuilder.aspx.cs uses ViewState["CurrentTemplate"] for page-level state.
+
+Important: AppPageBase.cs is intentionally not included. Delete it.
