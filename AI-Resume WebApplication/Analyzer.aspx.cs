@@ -40,7 +40,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// Dynamic suggestions calculations
-
-// Multi-experience ATS calibration complete

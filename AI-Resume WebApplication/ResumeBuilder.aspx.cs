@@ -184,5 +184,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// ViewState["CurrentTemplate"] manages active template choice

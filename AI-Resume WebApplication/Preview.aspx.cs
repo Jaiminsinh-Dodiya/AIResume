@@ -111,5 +111,3 @@ namespace AI_Resume_WebApplication
         }
     }
 }
-
-// Cross-profile template verification completed
