@@ -90,9 +90,13 @@ namespace AI_Resume_WebApplication
         {
             string templateId = Request.QueryString["template"];
 
-            if (templateId == null)
+            if (string.IsNullOrEmpty(templateId) && ViewState["CurrentTemplate"] != null)
             {
-                templateId = "modern";
+                templateId = ViewState["CurrentTemplate"].ToString();
+            }
+            else if (string.IsNullOrEmpty(templateId) && Session["SelectedTemplate"] != null)
+            {
+                templateId = Session["SelectedTemplate"].ToString();
             }
 
             if (templateId != "modern" && templateId != "executive" && templateId != "minimalist")
@@ -160,6 +164,47 @@ namespace AI_Resume_WebApplication
                 return;
             }
 
+            try
+            {
+                getCon();
+
+                // update user full name
+                SqlCommand cmdUser = new SqlCommand("update Users set FullName=@name where Id=@userId", con);
+                cmdUser.Parameters.AddWithValue("@name", txtFullName.Text.Trim());
+                cmdUser.Parameters.AddWithValue("@userId", Session["userId"]);
+                cmdUser.ExecuteNonQuery();
+
+                // update career profile details
+                da = new SqlDataAdapter("select * from CareerProfile where UserId='" + Session["userId"] + "'", con);
+                ds = new DataSet();
+                da.Fill(ds);
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    SqlCommand cmdProfile = new SqlCommand("update CareerProfile set ProfessionalTitle=@title, ProfessionalSummary=@summary, Phone=@phone where UserId=@userId", con);
+                    cmdProfile.Parameters.AddWithValue("@title", txtTargetTitle.Text.Trim());
+                    cmdProfile.Parameters.AddWithValue("@summary", txtSummary.Text.Trim());
+                    cmdProfile.Parameters.AddWithValue("@phone", txtPhone.Text.Trim());
+                    cmdProfile.Parameters.AddWithValue("@userId", Session["userId"]);
+                    cmdProfile.ExecuteNonQuery();
+                }
+                else
+                {
+                    SqlCommand cmdInsert = new SqlCommand("insert into CareerProfile (UserId, ProfessionalTitle, ProfessionalSummary, Phone) values (@userId, @title, @summary, @phone)", con);
+                    cmdInsert.Parameters.AddWithValue("@userId", Session["userId"]);
+                    cmdInsert.Parameters.AddWithValue("@title", txtTargetTitle.Text.Trim());
+                    cmdInsert.Parameters.AddWithValue("@summary", txtSummary.Text.Trim());
+                    cmdInsert.Parameters.AddWithValue("@phone", txtPhone.Text.Trim());
+                    cmdInsert.ExecuteNonQuery();
+                }
+
+                con.Close();
+            }
+            catch
+            {
+                if (con != null && con.State == ConnectionState.Open) con.Close();
+            }
+
             if (lblStatus != null)
             {
                 lblStatus.Text = "Resume changes saved successfully.";
@@ -176,10 +221,66 @@ namespace AI_Resume_WebApplication
                 return;
             }
 
-            if (lblStatus != null)
+            string currentSummary = txtSummary.Text.Trim();
+            string targetTitle = txtTargetTitle.Text.Trim();
+
+            if (string.IsNullOrEmpty(targetTitle))
             {
-                lblStatus.Text = "AI Smart Rewrite will be available in a later phase.";
-                lblStatus.Visible = true;
+                targetTitle = "Software Developer";
+            }
+
+            // fetch skills from database to help AI personalize the summary
+            string skillsList = "";
+            try
+            {
+                getCon();
+                da = new SqlDataAdapter("select SkillName from Skills where UserId='" + Session["userId"] + "'", con);
+                ds = new DataSet();
+                da.Fill(ds);
+                con.Close();
+
+                var skills = new System.Collections.Generic.List<string>();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    skills.Add(row["SkillName"].ToString());
+                }
+                skillsList = string.Join(", ", skills);
+            }
+            catch
+            {
+                if (con != null && con.State == ConnectionState.Open) con.Close();
+            }
+
+            // Call AI Rewrite
+            string rewritten = AiHelper.RewriteSummary(currentSummary, targetTitle, skillsList);
+
+            if (!string.IsNullOrEmpty(rewritten))
+            {
+                txtSummary.Text = rewritten;
+
+                // save rewritten summary to CareerProfile table
+                try
+                {
+                    getCon();
+                    SqlCommand cmd = new SqlCommand("update CareerProfile set ProfessionalSummary=@summary where UserId=@userId", con);
+                    cmd.Parameters.AddWithValue("@summary", rewritten);
+                    cmd.Parameters.AddWithValue("@userId", Session["userId"]);
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                catch
+                {
+                    if (con != null && con.State == ConnectionState.Open) con.Close();
+                }
+
+                if (lblStatus != null)
+                {
+                    lblStatus.Text = "✨ Summary enhanced with AI and saved!";
+                    lblStatus.Visible = true;
+                }
+
+                // update live resume preview immediately
+                RenderPreview();
             }
         }
     }
