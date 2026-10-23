@@ -12,7 +12,10 @@
             <h1 style="font-size:var(--text-3xl); font-weight:800; margin-bottom:var(--space-1);">AI Resume &amp; ATS Score Inspector</h1>
             <p style="font-size:var(--text-sm); color:var(--text-muted);">Real-time document analysis against target job postings</p>
         </div>
-        <asp:Button ID="btnAnalyze" runat="server" Text="Re-Scan Document" CssClass="btn btn-primary btn-sm" OnClick="btnAnalyze_Click" ValidationGroup="AnalyzerGroup" />
+        <div class="flex items-center gap-3">
+            <asp:Label ID="lblAnalyzerStatus" runat="server" CssClass="badge badge-purple" Visible="false"></asp:Label>
+            <asp:Button ID="btnAnalyze" runat="server" Text="Re-Scan Document" CssClass="btn btn-primary btn-sm" OnClick="btnAnalyze_Click" ValidationGroup="AnalyzerGroup" />
+        </div>
     </div>
 
     <!-- UPLOAD & JOB DESCRIPTION SCAN SECTION -->
@@ -20,12 +23,13 @@
         <h3 style="margin-bottom:var(--space-4);">Upload &amp; Scan Target Job</h3>
         <div class="grid grid-cols-2 gap-6">
             <div class="form-group">
-                <label for="<%= fileResumeUpload.ClientID %>" class="form-label">Upload Resume (PDF / DOCX)</label>
+                <label for="<%= fileResumeUpload.ClientID %>" class="form-label">Upload Resume (TXT / PDF / DOCX - Optional)</label>
                 <asp:FileUpload ID="fileResumeUpload" runat="server" CssClass="form-input" />
+                <span style="font-size:11px; color:var(--text-muted); display:block; margin-top:4px;">If no file is uploaded, your saved profile data (skills, summary, experience) is automatically analyzed.</span>
             </div>
             <div class="form-group">
                 <label for="<%= txtJobDescription.ClientID %>" class="form-label">Target Job Description</label>
-                <asp:TextBox ID="txtJobDescription" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-input" placeholder="Paste target job description here..."></asp:TextBox>
+                <asp:TextBox ID="txtJobDescription" runat="server" TextMode="MultiLine" Rows="4" CssClass="form-input" placeholder="Paste target job description here... (e.g. required skills, responsibilities)"></asp:TextBox>
             </div>
         </div>
     </div>
@@ -38,11 +42,11 @@
                 <h3 style="margin-bottom:var(--space-4);">Overall ATS Match</h3>
                 <div class="analyzer-gauge" style="margin-bottom:var(--space-4);">
                     <div class="analyzer-gauge-inner">
-                        <span class="text-gradient-purple" style="font-size:var(--text-4xl); font-weight:800; line-height:1;">98%</span>
-                        <span style="font-size:10px; color:var(--text-muted);">EXCELLENT</span>
+                        <asp:Label ID="lblOverallScore" runat="server" Text="88%" CssClass="text-gradient-purple" style="font-size:var(--text-4xl); font-weight:800; line-height:1;"></asp:Label>
+                        <asp:Label ID="lblScoreRating" runat="server" Text="STRONG MATCH" style="font-size:10px; color:var(--text-muted); text-transform:uppercase; display:block; margin-top:4px;"></asp:Label>
                     </div>
                 </div>
-                <span class="badge badge-success">Greenhouse &amp; Lever Ready</span>
+                <asp:Label ID="lblAtsStatus" runat="server" Text="Greenhouse &amp; Lever Ready" CssClass="badge badge-success"></asp:Label>
             </div>
 
             <!-- SCORE BREAKDOWN CATEGORIES -->
@@ -52,33 +56,33 @@
                     <div>
                         <div class="flex justify-between" style="font-size:var(--text-xs); margin-bottom:4px;">
                             <span>Impact &amp; Action Verbs</span>
-                            <span style="color:var(--color-success); font-weight:700;">96/100</span>
+                            <asp:Label ID="lblImpactScore" runat="server" Text="88/100" style="color:var(--color-success); font-weight:700;"></asp:Label>
                         </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:96%;"></div></div>
+                        <div class="progress-bar-bg"><div id="pbImpact" runat="server" class="progress-bar-fill" style="width:88%;"></div></div>
                     </div>
 
                     <div>
                         <div class="flex justify-between" style="font-size:var(--text-xs); margin-bottom:4px;">
                             <span>Keyword Density</span>
-                            <span style="color:var(--color-success); font-weight:700;">94/100</span>
+                            <asp:Label ID="lblKeywordScore" runat="server" Text="82/100" style="color:var(--color-success); font-weight:700;"></asp:Label>
                         </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:94%;"></div></div>
+                        <div class="progress-bar-bg"><div id="pbKeyword" runat="server" class="progress-bar-fill" style="width:82%;"></div></div>
                     </div>
 
                     <div>
                         <div class="flex justify-between" style="font-size:var(--text-xs); margin-bottom:4px;">
                             <span>Formatting &amp; Layout Compliance</span>
-                            <span style="color:var(--accent-highlight); font-weight:700;">100/100</span>
+                            <asp:Label ID="lblFormatScore" runat="server" Text="95/100" style="color:var(--accent-highlight); font-weight:700;"></asp:Label>
                         </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;"></div></div>
+                        <div class="progress-bar-bg"><div id="pbFormat" runat="server" class="progress-bar-fill" style="width:95%;"></div></div>
                     </div>
 
                     <div>
                         <div class="flex justify-between" style="font-size:var(--text-xs); margin-bottom:4px;">
                             <span>Brevity &amp; Conciseness</span>
-                            <span style="color:var(--color-warning); font-weight:700;">88/100</span>
+                            <asp:Label ID="lblBrevityScore" runat="server" Text="86/100" style="color:var(--color-warning); font-weight:700;"></asp:Label>
                         </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:88%;"></div></div>
+                        <div class="progress-bar-bg"><div id="pbBrevity" runat="server" class="progress-bar-fill" style="width:86%;"></div></div>
                     </div>
                 </div>
             </div>
@@ -89,26 +93,28 @@
             <!-- KEYWORD COMPARISON -->
             <div class="glass-card p-6">
                 <h3 style="margin-bottom:var(--space-4);">Target Job Keyword Match</h3>
-                <p style="font-size:var(--text-xs); margin-bottom:var(--space-4);">Compared against: <b>Principal Staff Engineer - Stripe Inc.</b></p>
+                <p style="font-size:var(--text-xs); margin-bottom:var(--space-4);">Compared against: <b><asp:Label ID="lblComparedJob" runat="server" Text="Target Job Posting"></asp:Label></b></p>
                 
                 <div class="grid grid-cols-2 gap-4">
                     <div class="glass-card p-4" style="background:var(--bg-secondary);">
-                        <h4 style="font-size:var(--text-xs); color:var(--color-success); margin-bottom:8px;">&check; Matched Keywords (18)</h4>
+                        <h4 style="font-size:var(--text-xs); color:var(--color-success); margin-bottom:8px;">&check; Matched Keywords</h4>
                         <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                            <span class="badge badge-purple">Kubernetes</span>
-                            <span class="badge badge-purple">Golang</span>
-                            <span class="badge badge-purple">EKS Architecture</span>
-                            <span class="badge badge-purple">CI/CD Pipeline</span>
-                            <span class="badge badge-purple">Microservices</span>
-                            <span class="badge badge-purple">AWS Infrastructure</span>
+                            <asp:Literal ID="litMatchedKeywords" runat="server">
+                                <span class="badge badge-purple">C#</span>
+                                <span class="badge badge-purple">ASP.NET</span>
+                                <span class="badge badge-purple">SQL Server</span>
+                                <span class="badge badge-purple">REST API</span>
+                            </asp:Literal>
                         </div>
                     </div>
 
                     <div class="glass-card p-4" style="background:var(--bg-secondary);">
-                        <h4 style="font-size:var(--text-xs); color:var(--color-warning); margin-bottom:8px;">&#9888; Recommended Keywords to Add (2)</h4>
+                        <h4 style="font-size:var(--text-xs); color:var(--color-warning); margin-bottom:8px;">&#9888; Recommended Keywords to Add</h4>
                         <div style="display:flex; flex-wrap:wrap; gap:6px;">
-                            <span class="badge badge-warning">gRPC Protocols</span>
-                            <span class="badge badge-warning">Service Mesh Istio</span>
+                            <asp:Literal ID="litRecommendedKeywords" runat="server">
+                                <span class="badge badge-warning">Docker</span>
+                                <span class="badge badge-warning">CI/CD</span>
+                            </asp:Literal>
                         </div>
                     </div>
                 </div>
@@ -120,20 +126,20 @@
                 <div style="display:flex; flex-direction:column; gap:12px;">
                     <div class="glass-card p-4 flex items-center justify-between" style="background:var(--bg-secondary);">
                         <div style="flex:1;">
-                            <span class="badge badge-purple" style="margin-bottom:4px;">Action Verb Suggestion</span>
-                            <h4 style="font-size:var(--text-sm);">Replace generic verb "worked on" with "Architected" or "Spearheaded"</h4>
-                            <p style="font-size:var(--text-xs); color:var(--text-muted);">Improves executive leadership impact score by +8%.</p>
+                            <asp:Label ID="lblSugTag1" runat="server" CssClass="badge badge-purple" style="margin-bottom:4px;" Text="Action Verb Suggestion"></asp:Label>
+                            <h4 style="font-size:var(--text-sm);"><asp:Label ID="lblSugTitle1" runat="server" Text="Replace generic verb 'worked on' with 'Architected' or 'Spearheaded'"></asp:Label></h4>
+                            <p style="font-size:var(--text-xs); color:var(--text-muted);"><asp:Label ID="lblSugDesc1" runat="server" Text="Improves executive leadership impact score by +8%."></asp:Label></p>
                         </div>
-                        <asp:Button ID="btnAutoFix1" runat="server" Text="Auto-Fix" CssClass="btn btn-primary btn-sm" OnClick="btnAutoFix_Click" />
+                        <asp:Button ID="btnAutoFix1" runat="server" Text="Auto-Fix" CssClass="btn btn-primary btn-sm" OnClick="btnAutoFix_Click" CommandArgument="1" />
                     </div>
 
                     <div class="glass-card p-4 flex items-center justify-between" style="background:var(--bg-secondary);">
                         <div style="flex:1;">
-                            <span class="badge badge-cyan" style="margin-bottom:4px;">Keyword Integration</span>
-                            <h4 style="font-size:var(--text-sm);">Insert "gRPC Microservices" into Lead Systems Architect experience</h4>
-                            <p style="font-size:var(--text-xs); color:var(--text-muted);">Matches target job posting requirements at Stripe.</p>
+                            <asp:Label ID="lblSugTag2" runat="server" CssClass="badge badge-cyan" style="margin-bottom:4px;" Text="Keyword Integration"></asp:Label>
+                            <h4 style="font-size:var(--text-sm);"><asp:Label ID="lblSugTitle2" runat="server" Text="Add recommended missing skills to your profile"></asp:Label></h4>
+                            <p style="font-size:var(--text-xs); color:var(--text-muted);"><asp:Label ID="lblSugDesc2" runat="server" Text="Adds missing industry terms directly into your Skills database."></asp:Label></p>
                         </div>
-                        <asp:Button ID="btnAutoFix2" runat="server" Text="Auto-Fix" CssClass="btn btn-primary btn-sm" OnClick="btnAutoFix_Click" />
+                        <asp:Button ID="btnAutoFix2" runat="server" Text="Auto-Fix" CssClass="btn btn-primary btn-sm" OnClick="btnAutoFix_Click" CommandArgument="2" />
                     </div>
                 </div>
             </div>
