@@ -1,4 +1,4 @@
-# AI-Resume WebApplication
+# ResumeAI — AI Resume Builder & ATS Optimization Platform
 
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8.1-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![ASP.NET Web Forms](https://img.shields.io/badge/ASP.NET-Web%20Forms-blue)](https://dotnet.microsoft.com/apps/aspnet)
@@ -7,57 +7,85 @@
 [![IDE](https://img.shields.io/badge/Visual%20Studio-2022-5C2D91?logo=visualstudio)](https://visualstudio.microsoft.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
 
-An enterprise-ready ASP.NET Web Forms application designed for building, formatting, and analyzing AI-assisted resumes. Built with a unified Master Page architecture, robust Session-driven security, an administrative control panel, and an ATS readiness analysis engine.
+**ResumeAI** is an enterprise-grade ASP.NET Web Forms web application designed to help job seekers create, optimize, and export recruiter-grade, ATS-ready resumes. Featuring a robust 3-tier architecture, an integrated AI career assistance engine, live interactive builders, and pixel-perfect vector A4 PDF rendering, the platform bridges modern generative AI capabilities with reliable enterprise .NET technology.
 
 ---
 
-## Table of Contents
+## Technical Documentation Index
 
-- [Overview & Architecture](#overview--architecture)
-- [Team Contributions & Authorship](#team-contributions--authorship)
-- [Relational Database Design (5 Tables)](#relational-database-design-5-tables)
-- [Key Features](#key-features)
-  - [Authentication & Role Management](#authentication--role-management)
-  - [Administrative Control Panel](#administrative-control-panel)
-  - [Unified Candidate Profile](#unified-candidate-profile)
-  - [Resume Templates Engine](#resume-templates-engine)
-  - [AI ATS Resume Analyzer](#ai-ats-resume-analyzer)
-- [Project Structure](#project-structure)
-- [Getting Started & Local Setup](#getting-started--local-setup)
-- [Git Workflow & Remote Repository Instructions](#git-workflow--remote-repository-instructions)
-- [License](#license)
+For in-depth architectural breakdowns, database schema specifications, and implementation details, refer to the dedicated documentation in the [`docs/`](docs/) directory:
+
+| Document | Description |
+| :--- | :--- |
+| **[System Architecture](docs/architecture.md)** | Unified Master Page pattern, ASP.NET lifecycle, state management, and subsystem interaction |
+| **[Database Schema & ER](docs/database.md)** | Complete 5-table relational design, entity diagrams, cascading foreign keys, and seed scripts |
+| **[AI Integration Engine](docs/ai-integration.md)** | `AiHelper.cs` architecture, lightweight `HttpClient` REST patterns, prompt structure, and fail-safe fallbacks |
+| **[Templates & PDF Export](docs/templates-and-pdf.md)** | Dynamic layout engine, Nova / Prestige / Aura layouts, embedded CSS guarantees, and print calibration |
+| **[Administration & Security](docs/admin-and-security.md)** | Admin portal, command-based `RowCommand` CRUD pattern, self-deletion guards, and session state guards |
+| **[Local Setup & Installation](docs/setup-guide.md)** | Step-by-step developer setup, Visual Studio configuration, LocalDB initialization, and troubleshooting |
 
 ---
 
-## Overview & Architecture
+## Key Platform Capabilities
 
-**AI-Resume WebApplication** uses a single, unified master page (`Website.Master`) that toggles view states dynamically through server-side `asp:Panel` controls. This eliminates master-page redundancy and provides consistent layout across public landing pages, candidate profile forms, and the administrative dashboard.
+```mermaid
+graph LR
+    subgraph Input ["1. Candidate Profile"]
+        Profile["Master Career Profile<br/>(Skills, Experience, Education)"]
+    end
 
-### Core Architectural Principles:
-1. **Unified Page Shell**: `Website.Master` delivers a cohesive header, drawer navigation, and footer across all views.
-2. **Faculty Reference Pattern Compliance**:
-   - Replaces fragile inline GridView edit templates (`RowEditing`, `RowUpdating`, `FindControl()` casting) with clean `ButtonField` commands (`cmd_edit`, `cmd_delete`) via `RowCommand`.
-   - Utilizes `ViewState["Id"]` to track record selection and toggle button semantics dynamically (e.g., `Add User` &rarr; `Update User`).
-3. **Session State Security**: Centralized authentication tracking using `Session["userId"]`, `Session["userName"]`, and `Session["role"]` with automatic redirection for unauthenticated or non-admin requests.
-4. **Clean Presentation Separation**: Independent token-based design system (`assets/css/tokens.css`, `variables.css`, `base.css`) combined with print-optimized stylesheets (`templates.css`) for high-fidelity PDF generation.
+    subgraph AI ["2. Intelligent Processing"]
+        Rewrite["AI Summary Rewriter<br/>(Action-Verb Synthesis)"]
+        ATS["ATS Match Engine<br/>(Keyword Gap Analysis)"]
+        AutoFix["Database Auto-Fix<br/>(One-Click Remediation)"]
+    end
+
+    subgraph Rendering ["3. Vector Presentation"]
+        Nova["Nova (Modern Tech)"]
+        Prestige["Prestige (Executive)"]
+        Aura["Aura (Clean Minimalist)"]
+        PDF["Vector A4 PDF Export<br/>(Zero-Margin Print Engine)"]
+    end
+
+    Profile --> Rewrite
+    Profile --> ATS
+    ATS --> AutoFix
+    AutoFix --> Profile
+    Profile --> Nova
+    Profile --> Prestige
+    Profile --> Aura
+    Nova --> PDF
+    Prestige --> PDF
+    Aura --> PDF
+```
+
+### 1. Intelligent AI Career Assistance
+* **AI Summary Rewrite**: Formulates punchy, metric-driven professional summaries tailored to target job titles in a single click.
+* **AI ATS Readiness Inspector**: Audits resumes against hiring filters, computing overall readiness gauges, keyword alignment, content quality, and actionable recommendations.
+* **Database Auto-Fix**: Automatically resolves identified skill gaps by inserting missing industry competencies directly into the candidate's SQL profile.
+* **Resilient Fail-Safe Architecture**: Uses standard `HttpClient` with automatic fallback heuristics to ensure continuous availability even during network disruptions.
+
+### 2. Recruiter-Approved Resume Templates
+* **Nova (Modern Tech)**: Top accent stripe, bold typography, inline SVG contact markers, and neatly wrapped skill pill tags.
+* **Prestige (Executive / Harvard Classic)**: Traditional single-column corporate layout, centered serif headings, balanced chronological date rows, and formal divider rules.
+* **Aura (Clean Minimalist / Silicon Valley)**: Split asymmetric header, primary-color left border section indicators, and soft neutral badge tags.
+* **Zero-Cache Invalidation Bug Guarantee**: Injects fully self-contained CSS styles directly within the document container to prevent browser caching glitches.
+
+### 3. High-DPI Vector PDF Export
+* Full compliance with global **A4 portrait** specifications (`@page { size: A4 portrait; margin: 0; }`).
+* Automatically suppresses all application navigation chrome, sidebars, and ambient effects during print.
+* Generates razor-sharp vector text and SVG assets suitable for direct submission to Applicant Tracking Systems (Workday, Greenhouse, Lever).
+
+### 4. Administrative Control Center
+* Live candidate management via ASP.NET `GridView`.
+* Implements the robust **Top-Form `RowCommand` pattern** (`cmd_edit`, `cmd_delete`) using `ViewState["Id"]` state retention.
+* Built-in security guards preventing self-deletion of the active administrator account and protecting credential privacy.
 
 ---
 
-## Team Contributions & Authorship
+## Relational Database Architecture
 
-This project was developed by a team of 3 contributors with clearly partitioned architectural responsibilities:
-
-| Contributor | Role | Contribution % | Primary Modules & Responsibilities |
-|-------------|------|:--------------:|-------------------------------------|
-| **Jaiminsinh Dodiya** (`Jaiminsinh-Dodiya`) | **Lead Programmer** | **55%** | Resume Template Engine (`ResumeTemplateBase.cs`), Template Gallery (`Templates.aspx`), Interactive Resume Builder (`ResumeBuilder.aspx`), Standalone Resume Preview (`Preview.aspx`), AI ATS Analyzer (`Analyzer.aspx`), `CareerProfile` database table, User Panel core integration, and Visual Studio solution architecture. |
-| **WilliamSinh Parmar** (`WilliamSinhParmar`) | **Full-Stack & UI Developer** | **25%** | 3 Database Tables (`Skills`, `Education`, `Experience`), User Panel management sections in `Profile.aspx` (Skills, Education, Experience CRUD), User Dashboard widgets (`Dashboard.aspx`), User Settings (`Settings.aspx`), CSS design system, typography tokens, animations, and print media queries (`templates.css`). |
-| **Prinsooo** (`Prinsooo`) | **Backend & Security Developer** | **20%** | `Users` database table, User Registration (`Register.aspx`), User Login (`Login.aspx`), Session authorization, complete Admin Panel (`AdminPanel.aspx`, `AdminPanel.aspx.cs`) with custom `RowCommand` CRUD pattern, self-deletion prevention, and faculty reports. |
-
----
-
-## Relational Database Design (5 Tables)
-
-The relational schema is defined in [`App_Data/AIResume_Database.sql`](AI-Resume%20WebApplication/App_Data/AIResume_Database.sql) and enforces strict referential integrity with cascading deletes (`ON DELETE CASCADE`).
+The application database is built around a candidate-centric relational model comprising 5 normalized tables with cascading referential integrity:
 
 ```mermaid
 erDiagram
@@ -67,17 +95,16 @@ erDiagram
     USERS ||--o{ EXPERIENCE : "1 : N (UserId)"
 
     USERS {
-        int Id PK "IDENTITY(1,1)"
+        int Id PK
         nvarchar FullName
         nvarchar Email "UNIQUE"
         nvarchar Password
         nvarchar Role "CHECK ('User','Admin')"
-        datetime CreatedAt "DEFAULT GETDATE()"
+        datetime CreatedAt
     }
-
     CAREER_PROFILE {
-        int CareerProfileId PK "IDENTITY(1,1)"
-        int UserId FK "UNIQUE, ON DELETE CASCADE"
+        int CareerProfileId PK
+        int UserId FK "UNIQUE"
         nvarchar ProfessionalTitle
         nvarchar ProfessionalSummary
         nvarchar Phone
@@ -85,18 +112,16 @@ erDiagram
         nvarchar LinkedInUrl
         nvarchar PortfolioUrl
     }
-
     SKILLS {
-        int SkillId PK "IDENTITY(1,1)"
-        int UserId FK "ON DELETE CASCADE"
+        int SkillId PK
+        int UserId FK
         nvarchar SkillName
         nvarchar SkillCategory
         nvarchar SkillLevel
     }
-
     EDUCATION {
-        int EducationId PK "IDENTITY(1,1)"
-        int UserId FK "ON DELETE CASCADE"
+        int EducationId PK
+        int UserId FK
         nvarchar Institution
         nvarchar Degree
         nvarchar FieldOfStudy
@@ -104,63 +129,19 @@ erDiagram
         date EndDate
         nvarchar Grade
     }
-
     EXPERIENCE {
-        int ExperienceId PK "IDENTITY(1,1)"
-        int UserId FK "ON DELETE CASCADE"
+        int ExperienceId PK
+        int UserId FK
         nvarchar CompanyName
         nvarchar JobTitle
         date StartDate
         date EndDate
-        bit IsCurrent "DEFAULT 0"
+        bit IsCurrent
         nvarchar Description
     }
 ```
 
-### Table Breakdown:
-1. **`Users`** *(Authored by Prinsooo)*: Stores login credentials, account role (`User` or `Admin`), and creation timestamp. Unique constraint on `Email`.
-2. **`CareerProfile`** *(Authored by Jaiminsinh Dodiya)*: 1-to-1 table storing professional summary, title, phone, location, LinkedIn, and portfolio links.
-3. **`Skills`** *(Authored by WilliamSinh Parmar)*: 1-to-N table storing candidate skills, categories (e.g. Programming, Database), and proficiency levels.
-4. **`Education`** *(Authored by WilliamSinh Parmar)*: 1-to-N table tracking academic qualifications, institutions, degrees, and graduation dates.
-5. **`Experience`** *(Authored by WilliamSinh Parmar)*: 1-to-N table tracking past and current employment history with boolean `IsCurrent` flag.
-
----
-
-## Key Features
-
-### Authentication & Role Management
-- **Registration (`Register.aspx`)**: Client and server-side validation, password match verification, duplicate email checking.
-- **Login (`Login.aspx`)**: Secure authentication against SQL Server, session initialization (`Session["userId"]`, `Session["userName"]`, `Session["role"]`).
-- **Role-Based Redirection**: Administrators automatically land on `AdminPanel.aspx`; candidates land on `Dashboard.aspx`.
-- **Logout (`Logout.aspx`)**: Session invalidation and secure redirection.
-
-### Administrative Control Panel
-- **User Management (`AdminPanel.aspx`)**:
-  - Live GridView of all registered users.
-  - Add new users with assigned roles (`User` or `Admin`).
-  - Edit existing records using custom `cmd_edit` `RowCommand` &mdash; automatically loads selected values into top form and switches submit action to `Update User`.
-  - Delete user records with cascade cleanup (`ON DELETE CASCADE`) and safety guard preventing admins from deleting their active account.
-
-### Unified Candidate Profile
-- **`Profile.aspx`**: Single intuitive management hub combining:
-  - Career Profile overview (Title, summary, contact details, social links).
-  - Technical & Soft Skills inventory with category tags and proficiency levels.
-  - Academic Education timeline with degree, institution, and grades.
-  - Work Experience history with current employer toggle.
-
-### Resume Templates Engine
-- **Engine Architecture (`ResumeTemplateBase.cs`)**:
-  - **Modern Template**: Clean dual-column layout with sidebar for contact, skills, and education, and primary column for summary and experience timeline.
-  - **Executive Template**: Traditional, formal format with elegant typography and chronological experience highlights.
-  - **Minimalist Template**: Modern single-column layout maximizing whitespace and readability.
-- **Live Builder (`ResumeBuilder.aspx`)**: Real-time template switching preserved via `ViewState["CurrentTemplate"]`.
-- **Preview & Export (`Preview.aspx`)**: Standalone printable view with `@media print` CSS for standard A4 and PDF output.
-
-### AI ATS Resume Analyzer
-- **`Analyzer.aspx`**:
-  - Computes ATS readiness scores based on profile completeness, keyword density, and summary depth.
-  - Surfaces actionable suggestions to improve resume visibility with hiring algorithms.
-  - Includes "AI Smart Rewrite" triggers within the resume builder.
+*For comprehensive table definitions, constraints, and seeding instructions, see [`docs/database.md`](docs/database.md).*
 
 ---
 
@@ -168,111 +149,64 @@ erDiagram
 
 ```
 CSharp_AIResumeWebApplication/
-├── AI-Resume WebApplication/               # Main ASP.NET Web Forms Project
+├── AI-Resume WebApplication/           # Main Web Forms Project Root
 │   ├── App_Data/
-│   │   └── AIResume_Database.sql          # 5-table relational schema & seed script
+│   │   ├── AIResume_Database.sql      # Database schema creation & seed script
+│   │   └── ApplicationDatabase.mdf    # Microsoft SQL Server LocalDB file
 │   ├── assets/
-│   │   ├── css/                           # Design tokens, components, layouts, templates.css
-│   │   ├── js/                            # Theme switcher, UI controllers, app.js
-│   │   └── animations/                    # Smooth UI interactions & canvas animations
-│   ├── Website.Master                     # Unified Master Page shell
-│   ├── Default.aspx                       # Landing page & feature showcase
-│   ├── Login.aspx                         # Authentication portal
-│   ├── Register.aspx                      # Candidate registration
-│   ├── Logout.aspx                        # Session cleanup
-│   ├── AdminPanel.aspx                    # Administrative control center
-│   ├── Dashboard.aspx                     # Candidate home dashboard
-│   ├── Profile.aspx                       # Multi-section candidate profile manager
-│   ├── Templates.aspx                     # Resume templates visual gallery
-│   ├── ResumeBuilder.aspx                 # Interactive resume customizer
-│   ├── Preview.aspx                       # Print-ready resume renderer
-│   ├── Analyzer.aspx                      # AI ATS readiness scoring
-│   ├── Settings.aspx                      # Account preferences & password update
-│   ├── ResumeTemplateBase.cs              # Base template rendering engine
-│   ├── Web.config                         # Connection strings & ASP.NET configuration
-│   └── packages.config                    # NuGet dependencies
-├── AI-Resume WebApplication.sln           # Visual Studio 2022 Solution
-├── setup.bat                              # One-click NuGet restore & MSBuild script
-├── NuGet.Config                           # Official NuGet package source mapping
-├── LICENSE.txt                            # MIT License
-└── README.md                              # Comprehensive project documentation
+│   │   ├── css/                       # Design tokens, layouts, and templates.css
+│   │   └── js/                        # Filter controllers, theme scripts, and app.js
+│   ├── Website.Master                 # Unified Master Page shell
+│   ├── Default.aspx                   # Public landing page & platform overview
+│   ├── Login.aspx / Register.aspx     # Candidate & Admin authentication
+│   ├── Dashboard.aspx                 # Candidate analytics and quick actions
+│   ├── Profile.aspx                   # Multi-section candidate profile manager
+│   ├── Templates.aspx                 # Interactive template gallery with live filtering
+│   ├── ResumeBuilder.aspx             # Real-time resume customizer & AI rewriter
+│   ├── Preview.aspx                   # Standalone A4 vector PDF print viewer
+│   ├── Analyzer.aspx                  # AI ATS inspector & database auto-fix
+│   ├── AdminPanel.aspx                # Administrative user management portal
+│   ├── AiHelper.cs                    # Lightweight HTTP AI communication engine
+│   ├── ResumeTemplateBase.cs          # Multi-template HTML/CSS rendering engine
+│   └── Web.config                     # Database connections & AI endpoint settings
+├── docs/                              # In-depth architectural & technical documentation
+│   ├── architecture.md
+│   ├── database.md
+│   ├── ai-integration.md
+│   ├── templates-and-pdf.md
+│   ├── admin-and-security.md
+│   └── setup-guide.md
+├── AI-Resume WebApplication.sln       # Visual Studio 2022 Solution
+├── setup.bat                          # One-click dependency restore & build script
+├── LICENSE.txt                        # MIT Open Source License
+└── README.md                          # Project documentation
 ```
 
 ---
 
-## Getting Started & Local Setup
+## Quickstart & Local Setup
 
 ### Prerequisites
-- **Visual Studio 2022** (Community, Professional, or Enterprise) with **ASP.NET and web development** workload.
-- **.NET Framework 4.8.1 Developer Pack**.
-- **Microsoft SQL Server Express / LocalDB** (`(LocalDB)\MSSQLLocalDB`).
+* Windows 10 / 11
+* [Visual Studio 2022](https://visualstudio.microsoft.com/) with **ASP.NET and web development** workload
+* .NET Framework 4.8.1 Developer Pack
+* Microsoft SQL Server Express / LocalDB
 
-### 1. Database Setup
-1. Open **Visual Studio 2022**.
-2. Open **Server Explorer** (`View > Server Explorer`).
-3. Under **Data Connections**, connect to `(LocalDB)\MSSQLLocalDB` or right-click `ApplicationDatabase.mdf` inside `App_Data/`.
-4. Open [`AI-Resume WebApplication/App_Data/AIResume_Database.sql`](AI-Resume%20WebApplication/App_Data/AIResume_Database.sql).
-5. Execute the script to create all 5 tables and insert test seed records.
+### 1-Click Launch
+1. Clone or download the repository.
+2. Run `setup.bat` from the root directory to restore NuGet packages and build the project.
+3. Open `AI-Resume WebApplication.sln` in Visual Studio 2022 and press **Ctrl + F5** to run in IIS Express.
 
-### 2. Build & Run
-#### Option A: Visual Studio (Recommended)
-1. Double-click `AI-Resume WebApplication.sln` to open in Visual Studio 2022.
-2. Select `Debug | Any CPU`.
-3. Press **F5** or click **IIS Express** to build and launch in your default browser.
-
-#### Option B: One-Click Setup Script
-```cmd
-setup.bat
-```
-`setup.bat` automatically bootstraps `nuget.exe`, restores packages, and compiles the solution using MSBuild.
-
-### 3. Default Test Credentials
-| Account Type | Email | Password | Destination |
-|--------------|-------|----------|-------------|
+### Pre-Seeded Evaluation Accounts
+| Account Type | Email | Password | Landing Page |
+| :--- | :--- | :--- | :--- |
 | **Administrator** | `admin@resumeai.com` | `admin123` | `AdminPanel.aspx` |
 | **Demo Candidate** | `demo@resumeai.com` | `demo123` | `Dashboard.aspx` |
 
----
-
-## Git Workflow & Remote Repository Instructions
-
-This repository is maintained with two core branches:
-- **`main`**: Stable, production-ready releases (tagged at semantic milestones).
-- **`development`**: Active feature integration and sprint development.
-
-### How to Connect to Your Empty Remote Repository
-
-To link this local repository with your empty GitHub or GitLab repository, run the following commands in PowerShell or Command Prompt:
-
-```bash
-# 1. Navigate to the project root directory
-cd d:\FORAI\CSharp_AIResumeWebApplication
-
-# 2. Add your remote repository URL as origin
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-
-# 3. Push the main branch to the remote
-git push -u origin main
-
-# 4. Push the development branch to the remote
-git push -u origin development
-
-# 5. Push all milestone release tags to the remote
-git push origin --tags
-```
-
-### Release Milestones & Tags:
-- `v0.1.0-alpha`: Initial Web Forms scaffolding, layout shell, and design system.
-- `v0.2.0-db-schema`: Complete 5-table relational database schema with sample seed data.
-- `v0.3.0-auth`: User Registration, Login, Session role management & Logout.
-- `v0.4.0-admin-panel`: Admin Panel CRUD with GridView RowCommand pattern.
-- `v0.5.0-user-profile`: Multi-section User Profile (CareerProfile, Skills, Education, Experience).
-- `v0.6.0-templates`: Resume templates (Modern, Executive, Minimalist) & Builder.
-- `v0.7.0-ai-analyzer`: AI ATS Resume Analyzer & score diagnostics.
-- `v1.0.0`: Production release with unified navigation and full documentation.
+*For complete setup instructions and troubleshooting, see [`docs/setup-guide.md`](docs/setup-guide.md).*
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE.txt).
+This project is open-source and distributed under the [MIT License](LICENSE.txt).
